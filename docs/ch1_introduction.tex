@@ -1,0 +1,109 @@
+% =============================================================================
+\chapter{Introduction}
+\label{ch:introduction}
+% =============================================================================
+
+\section{Overview}
+
+ShepherdLab LW~FEA-OPT is a lightweight, pure-MATLAB toolkit for
+finite element analysis and stress-ratio thickness optimisation of
+two-dimensional frame and truss structures.  It is designed to be readable,
+hackable, and easy to extend.
+
+The core capabilities are:
+
+\begin{itemize}[nosep]
+    \item 2-D Euler--Bernoulli frame elements with axial, shear, and bending
+          degrees of freedom.
+    \item Linear and nonlinear (Newton--Raphson) large-deflection analysis.
+    \item Stress-ratio thickness optimisation for uniform stress distribution.
+    \item Truss subdivision for organic topology optimisation.
+    \item Geometry import from CSV and IGES files.
+    \item Image-processing-based profile export for CAD integration.
+\end{itemize}
+
+\section{Installation}
+
+Clone or download the repository, then add the source directories to the
+MATLAB path by running the setup script:
+
+\begin{lstlisting}
+run('path/to/lw-feaopt/setup.m')
+\end{lstlisting}
+
+This adds \texttt{src/}, \texttt{io/}, and \texttt{examples/} to the path and
+creates the \texttt{profiles/} output directory if it does not already exist.
+
+\section{Requirements}
+
+\begin{itemize}[nosep]
+    \item MATLAB R2019b or later.
+    \item \textbf{Image Processing Toolbox} --- required for profile export
+          (\texttt{bwboundaries}, \texttt{poly2mask}, \texttt{imclose}).
+    \item Curve Fitting Toolbox --- optional; enables \texttt{csaps} smoothing
+          splines in the importers and exporter.  If unavailable, the code
+          falls back to \texttt{pchip} interpolation.
+\end{itemize}
+
+\section{Quick Start}
+
+Two demo scripts are included:
+
+\begin{lstlisting}
+demo_beam_optimization      % curved beam from an IGS file
+demo_truss_optimization     % Warren truss with element subdivision
+\end{lstlisting}
+
+Each script follows the same four-stage workflow:
+
+\begin{enumerate}[nosep]
+    \item \textbf{Define geometry} --- import a curve or build a truss
+          programmatically, assign material and section properties, and
+          specify boundary conditions.
+    \item \textbf{Analyse} --- run linear and/or nonlinear FEA.
+    \item \textbf{Optimise} --- iterate with the stress-ratio method until
+          convergence.
+    \item \textbf{Export} --- rasterise the optimised structure and export
+          spline-ready boundary loops for SolidWorks.
+\end{enumerate}
+
+\section{Project Layout}
+
+\Cref{tab:layout} summarises the directory structure.
+
+\begin{table}[htbp]
+\centering
+\caption{Repository directory structure.}
+\label{tab:layout}
+\begin{tabularx}{\textwidth}{lX}
+\toprule
+\textbf{Path} & \textbf{Contents} \\
+\midrule
+\texttt{src/}       & Core classes: \texttt{StructureGeometry},
+                      \texttt{ElementMatrices}, \texttt{AnalysisState},
+                      \texttt{FEAAnalysis}, \texttt{LoadCase},
+                      \texttt{StructurePlotter}, \texttt{optimizeThickness},
+                      \texttt{subdivideTruss}. \\
+\texttt{io/}        & Geometry importers (\texttt{importCSVCurve},
+                      \texttt{importIGSCurve}) and the profile exporter
+                      (\texttt{exportProfile}). \\
+\texttt{examples/}  & Runnable demo scripts. \\
+\texttt{profiles/}  & Auto-created output directory for exported CAD profiles. \\
+\texttt{docs/}      & This documentation ({\LaTeX} source). \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Conventions}
+
+Throughout this document:
+
+\begin{itemize}[nosep]
+    \item Vectors are set in bold italic: $\vect{u}$, $\vect{f}$.
+    \item Matrices are set in bold upright: $\mat{K}$, $\mat{T}$.
+    \item Transpose is denoted $(\cdot)\T$.
+    \item Scalar quantities use standard italic: $E$, $A$, $I$, $L$.
+    \item SI units are used throughout unless otherwise stated.
+    \item ``Element'' and ``member'' are used interchangeably.
+    \item Node DOFs are ordered $[u_x,\; u_y,\; \theta]$ at each node.
+\end{itemize}

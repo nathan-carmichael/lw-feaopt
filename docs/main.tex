@@ -1,0 +1,125 @@
+% =============================================================================
+%  ShepherdLab LW FEA-OPT Documentation
+%  Main file — compile with pdflatex or lualatex
+% =============================================================================
+\documentclass[11pt, a4paper]{report}
+
+% --- packages ----------------------------------------------------------------
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath, amssymb, bm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{cleveref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{microtype}
+
+% --- colours -----------------------------------------------------------------
+\definecolor{codebg}{RGB}{245,245,245}
+\definecolor{codeframe}{RGB}{200,200,200}
+\definecolor{keyword}{RGB}{0,80,160}
+\definecolor{comment}{RGB}{80,120,80}
+\definecolor{string}{RGB}{160,40,40}
+\definecolor{accent}{RGB}{0,90,160}
+
+% --- code listings -----------------------------------------------------------
+\lstset{
+    language=Matlab,
+    basicstyle=\ttfamily\small,
+    backgroundcolor=\color{codebg},
+    frame=single,
+    rulecolor=\color{codeframe},
+    keywordstyle=\color{keyword}\bfseries,
+    commentstyle=\color{comment}\itshape,
+    stringstyle=\color{string},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    numbersep=8pt,
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=4,
+    captionpos=b,
+    aboveskip=10pt,
+    belowskip=6pt,
+}
+
+% --- hyperref ----------------------------------------------------------------
+\hypersetup{
+    colorlinks=true,
+    linkcolor=accent,
+    citecolor=accent,
+    urlcolor=accent,
+    pdftitle={ShepherdLab LW FEA-OPT Documentation},
+    pdfauthor={ShepherdLab},
+}
+
+% --- headers -----------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\leftmark}
+\fancyhead[R]{\small ShepherdLab LW FEA-OPT}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% --- tcolorbox for tips/notes ------------------------------------------------
+\newtcolorbox{notebox}[1][]{
+    colback=blue!3, colframe=accent, fonttitle=\bfseries,
+    title=#1, boxrule=0.5pt, arc=2pt,
+}
+
+\newtcolorbox{warnbox}[1][]{
+    colback=red!3, colframe=red!60!black, fonttitle=\bfseries,
+    title=#1, boxrule=0.5pt, arc=2pt,
+}
+
+% --- maths shortcuts ---------------------------------------------------------
+\newcommand{\vect}[1]{\bm{#1}}
+\newcommand{\mat}[1]{\bm{#1}}
+\newcommand{\T}{^{\mathsf{T}}}
+\newcommand{\dd}{\mathrm{d}}
+
+% =============================================================================
+\begin{document}
+
+% --- title page --------------------------------------------------------------
+\begin{titlepage}
+    \centering
+    \vspace*{3cm}
+    {\Huge\bfseries ShepherdLab LW FEA-OPT\par}
+    \vspace{0.5cm}
+    {\Large Lightweight 2-D Frame Topology Optimisation for MATLAB\par}
+    \vspace{2cm}
+    {\large Documentation \& Theory Guide\par}
+    \vspace{1cm}
+    {\large Version 1.0\par}
+    \vspace{3cm}
+    {\large\today\par}
+    \vfill
+    {\small Released under the MIT licence.\par}
+\end{titlepage}
+
+% --- front matter ------------------------------------------------------------
+\tableofcontents
+\clearpage
+
+% --- chapters ----------------------------------------------------------------
+\input{chapters/ch1_introduction}
+\input{chapters/ch2_theory}
+\input{chapters/ch3_api_reference}
+\input{chapters/ch4_examples}
+\input{chapters/ch5_export}
+
+% --- appendix ----------------------------------------------------------------
+\appendix
+\input{chapters/app_a_file_listing}
+
+\end{document}
