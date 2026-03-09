@@ -29,32 +29,42 @@ demo_truss_optimization     % Warren truss with subdivision
 
 ```
 lw-feaopt/
+├── .gitignore
 ├── README.md
 ├── LICENSE
-├── setup.m               % one-line path setup
+├── setup.m
 │
-├── src/                   % core library
-│   ├── StructureGeometry.m    % nodes, connectivity, material data
-│   ├── ElementMatrices.m      % stiffness & transformation matrices
-│   ├── AnalysisState.m        % displacement, force, residual vectors
-│   ├── FEAAnalysis.m          % linear & Newton-Raphson solvers
-│   ├── LoadCase.m             % nodal loads & load stepping
-│   ├── StructurePlotter.m     % visualisation utilities
-│   ├── optimizeThickness.m    % stress-ratio thickness optimiser
-│   └── subdivideTruss.m       % split truss members into sub-elements
+├── src/
+│   ├── StructureGeometry.m
+│   ├── ElementMatrices.m
+│   ├── AnalysisState.m
+│   ├── FEAAnalysis.m
+│   ├── LoadCase.m
+│   ├── StructurePlotter.m
+│   ├── optimizeThickness.m
+│   └── subdivideTruss.m
 │
-├── io/                    % geometry import / export
-│   ├── importCSVCurve.m       % CSV (x,y) point lists
-│   ├── importIGSCurve.m       % IGES/IGS curve files
-│   └── exportProfile.m        % trace & export optimised outlines
+├── io/
+│   ├── importCSVCurve.m
+│   ├── importIGSCurve.m
+│   └── exportProfile.m
 │
-├── examples/              % runnable demos
+├── examples/
 │   ├── demo_beam_optimization.m
 │   └── demo_truss_optimization.m
 │
-├── profiles/              % exported CAD profiles (auto-created)
+├── profiles/
+│   └── .gitkeep              ← empty file so Git tracks the folder
 │
-└── docs/                  % documentation (LaTeX)
+└── docs/
+    ├── main.tex
+    └── chapters/
+        ├── ch1_introduction.tex
+        ├── ch2_theory.tex
+        ├── ch3_api_reference.tex
+        ├── ch4_examples.tex
+        ├── ch5_export.tex
+        └── app_a_file_listing.tex
 ```
 
 ## Usage
