@@ -54,7 +54,7 @@ lw-feaopt/
 │   └── demo_truss_optimization.m
 │
 ├── profiles/
-│   └── .gitkeep              ← empty file so Git tracks the folder
+│   └── .gitkeep          
 │
 └── docs/
     ├── main.tex
