@@ -51,7 +51,7 @@ if nargin < 2, options = struct(); end
 
 opt = applyDefaults(options, struct( ...
     'num_spline_points',  1000,        ...
-    'smoothing',          0.999999999, ...
+    'smoothing',          0.9999999, ...
     'scale_to_mm',        1000,        ...
     'resolution',         50000,       ...
     'min_thickness_frac', 0,           ...
@@ -366,63 +366,21 @@ end
 
 %% ========================= PLOTTING =========================
 
-function plotProfile(profile, geom, active_ids, opt)
+function plotProfile(profile, ~, ~, ~)
 
-    scale = opt.scale_to_mm;
+    figure('Name', 'Exported Profile', 'Position', [100 100 600 500]);
+    hold on;
 
-    figure('Name', 'Exported Profile', 'Position', [100 100 1400 500]);
-
-    % --- Panel 1: binary silhouette ---
-    subplot(1, 3, 1);
-    imshow(profile.image);
-    title('Binary Silhouette');
-
-    % --- Panel 2: element rectangles with traced boundaries ---
-    subplot(1, 3, 2); hold on;
-
-    for k = 1:numel(active_ids)
-        i = active_ids(k);
-        [n1, n2] = geom.getMemberNodes(i);
-        x = [geom.nodes(n1,1), geom.nodes(n2,1)] * scale;
-        y = [geom.nodes(n1,2), geom.nodes(n2,2)] * scale;
-
-        theta = atan2(y(2)-y(1), x(2)-x(1));
-        ht = geom.thickness(i) * scale / 2;
-        px = -sin(theta) * ht;
-        py =  cos(theta) * ht;
-
-        rx = [x(1)+px, x(1)-px, x(2)-px, x(2)+px, x(1)+px];
-        ry = [y(1)+py, y(1)-py, y(2)-py, y(2)+py, y(1)+py];
-
-        fill(rx, ry, [0.85 0.85 0.85], 'EdgeColor', [0.7 0.7 0.7], 'LineWidth', 0.3);
-    end
-
-    % Overlay raw traced boundaries
-    colors = lines(profile.num_loops);
-    for b = 1:profile.num_loops
-        loop = profile.loops{b};
-        if loop.is_hole
-            plot(loop.x, loop.y, '--', 'Color', colors(b,:), 'LineWidth', 1);
-        else
-            plot(loop.x, loop.y, '-', 'Color', colors(b,:), 'LineWidth', 1.5);
-        end
-    end
-
-    axis equal; grid on;
-    xlabel('X [mm]'); ylabel('Y [mm]');
-    title('Traced Boundaries');
-
-    % --- Panel 3: smoothed spline loops ---
-    subplot(1, 3, 3); hold on;
+    blue = [0.3 0.55 0.85];
 
     for b = 1:profile.num_loops
         loop = profile.loops{b};
 
         if loop.is_hole
-            fill(loop.xs, loop.ys, [1 1 1], 'EdgeColor', colors(b,:), ...
+            fill(loop.xs, loop.ys, [1 1 1], 'EdgeColor', blue, ...
                 'LineWidth', 1.5, 'LineStyle', '--');
         else
-            fill(loop.xs, loop.ys, [0.8 0.9 1], 'EdgeColor', colors(b,:), ...
+            fill(loop.xs, loop.ys, [0.75 0.85 0.95], 'EdgeColor', blue, ...
                 'LineWidth', 2, 'FaceAlpha', 0.5);
         end
     end
@@ -431,8 +389,6 @@ function plotProfile(profile, geom, active_ids, opt)
     xlabel('X [mm]'); ylabel('Y [mm]');
     title('Smoothed Spline Loops');
 
-    sgtitle('ShepherdLab LW FEA-OPT — Profile Export', ...
-        'FontSize', 13, 'FontWeight', 'bold');
 end
 
 
