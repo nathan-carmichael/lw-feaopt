@@ -8,8 +8,6 @@ slprj/
 *.slxc
 
 # Generated outputs
-profiles/*.txt
-profiles/*.mat
 
 # LaTeX build artifacts
 docs/*.aux
